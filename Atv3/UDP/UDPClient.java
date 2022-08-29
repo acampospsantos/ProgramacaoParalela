@@ -11,7 +11,7 @@ public class UDPClient {
 
         DatagramSocket clientSocket = new DatagramSocket(); //Cria socket cliente
 
-        InetAddress IPAddress = InetAddress.getByName("hostname"); //Translada nome do host para endereço IP usando DNS
+        InetAddress IPAddress = InetAddress.getByName("localhost"); //Translada nome do host para endereço IP usando DNS
 
         byte[] sendData = new byte[1024];
         byte[] receiveData = new byte[1024];
