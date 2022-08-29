@@ -3,29 +3,34 @@ package Atv3.TCP;
 import java.io.*;
 import java.net.*;
 
-public class TCPClient {
+class TCPClient {
 
-    public static void main(String argv[]) throws Exception {
-        String sentence;
-        String modifiedSentence;
+   public static void main(String argv[]) throws Exception {
+       String sentence;
+       String modifiedSentence;
 
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); //Cria stream de entrada
+       BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); //Cria stream de entrada
 
-        Socket clientSocket = new Socket("localhost", 6789); //Cria socket cliente, conecta ao servidor
+       int porta = 6789;
+       String servidor = "localhost";
 
-        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); // Cria stream de saída ligado ao socket
+       System.out.println("Conectando ao servidor " + servidor + ": " + porta);
 
-        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //Cria stream de entrada ligado ao socket
+       Socket clientSocket = new Socket(servidor, porta); //Cria socket cliente, conecta ao servidor
 
-        sentence = inFromUser.readLine(); 
+       DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream()); //Cria stream de saída ligado ao socket
 
-        outToServer.writeBytes(sentence + '\n'); //Envia linha para o servidor
+       BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream())); //Cria stream de entrada ligado ao socket
 
-        modifiedSentence = inFromServer.readLine(); //Lê linha do Servidor
+       System.out.print("Digite uma mensagem a ser enviada para o servidor: ");
+       sentence = inFromUser.readLine();
 
-        System.out.println("FROM SERVER: " + modifiedSentence); //
+       outToServer.writeBytes(sentence + '\n'); //Envia linha para o servidor
 
-        clientSocket.close();
-    }
+       modifiedSentence = inFromServer.readLine(); //Lê linha do Servidor
 
+       System.out.println("Recebido do servidor: " + modifiedSentence);
+
+       clientSocket.close();
+   }
 }

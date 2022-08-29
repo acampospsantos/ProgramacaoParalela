@@ -3,35 +3,38 @@ package Atv3.UDP;
 import java.io.*;
 import java.net.*;
 
-public class UDPClient {
+class UDPClient {
+  public static void main(String args[]) throws Exception {
 
-    public static void main(String args[]) throws Exception {
+     BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); // Cria stream de entrada
 
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in)); // Cria stream de entrada
+     DatagramSocket clientSocket = new DatagramSocket(); //Cria socket cliente
 
-        DatagramSocket clientSocket = new DatagramSocket(); //Cria socket cliente
+     String servidor = "localhost";
+     int porta = 9876;
 
-        InetAddress IPAddress = InetAddress.getByName("localhost"); //Translada nome do host para endereço IP usando DNS
+     InetAddress IPAddress = InetAddress.getByName(servidor); //Translada nome do host para endereço IP usando DNS
 
-        byte[] sendData = new byte[1024];
-        byte[] receiveData = new byte[1024];
+     byte[] sendData = new byte[1024];
+     byte[] receiveData = new byte[1024];
 
-        String sentence = inFromUser.readLine();
+     System.out.print("Digite o texto a ser enviado ao servidor: ");
+     String sentence = inFromUser.readLine();
+     sendData = sentence.getBytes();
+     DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, porta); //Cria datagrama com dados a enviar, tamanho, endereço IP, porta
 
-        sendData = sentence.getBytes();
+     System.out.println("Enviando pacote UDP para " + servidor + ": " + porta);
+     clientSocket.send(sendPacket); //Envia datagrama para servidor
 
-        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876); //Cria datagrama com dados a enviar, tamanho, endereço IP, porta
+     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 
-        clientSocket.send(sendPacket); //Envia datagrama para servidor
+     clientSocket.receive(receivePacket); //Lê datagrama do servidor
+     System.out.println("Pacote UDP recebido...");
 
-        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length); 
+     String modifiedSentence = new String(receivePacket.getData());
 
-        clientSocket.receive(receivePacket); //Lê datagrama do servidor
-
-        String modifiedSentence = new String(receivePacket.getData());
-
-        System.out.println("FROM SERVER:" + modifiedSentence);
-        clientSocket.close();
-    }
-
+     System.out.println("Texto recebido do servidor: " + modifiedSentence);
+     clientSocket.close();
+     System.out.println("Socket cliente fechado!");
+  }
 }
