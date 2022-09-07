@@ -1,3 +1,5 @@
+package Atv5Chat;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -176,3 +178,4 @@ public class Cliente extends JFrame implements ActionListener, KeyListener {
     }
 
 }
+

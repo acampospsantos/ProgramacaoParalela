@@ -1,3 +1,5 @@
+package Atv5Chat;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class Servidor extends Thread { //Servidor é um tipo de Thread
+public class Servidor extends Thread{ //Servidor é um tipo de Thread
     // Atributos
     private static ArrayList<BufferedWriter> clientes; //usado para armazenar o BufferedWriter de cada cliente conectado
     private static ServerSocket server; //usado para a criação do servidor, que em teoria deve ser feita apenas uma vez
