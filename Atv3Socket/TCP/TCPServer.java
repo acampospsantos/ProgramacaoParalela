@@ -1,4 +1,4 @@
-package Atv3.TCP;
+package Atv3Socket.TCP;
 
 import java.io.*;
 import java.net.*;
